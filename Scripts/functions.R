@@ -1,6 +1,7 @@
 library(tidyverse)
 library(phyloseq)
 library(DESeq2)
+library(ggplot2)
 library(ggpubr)
 library(patchwork)
 library(minfi)
@@ -72,7 +73,6 @@ theme_Publication <- function(base_size=12, base_family="sans") {
   (theme_foundation(base_size=base_size, base_family=base_family)
     + theme(plot.title = element_text(face = "bold",
                                       size = rel(0.8), hjust = 0.5),
-            #family = 'Helvetica'
             text = element_text(),
             panel.background = element_rect(colour = NA),
             plot.background = element_rect(colour = NA),
@@ -89,10 +89,8 @@ theme_Publication <- function(base_size=12, base_family="sans") {
             panel.grid.minor = element_blank(),
             legend.key = element_rect(colour = NA),
             legend.position = "right",
-            # legend.direction = "horizontal",
             legend.key.size= unit(0.2, "cm"),
             legend.spacing  = unit(0, "cm"),
-            # legend.title = element_text(face="italic"),
             plot.margin=unit(c(5,5,5,5),"mm"),
             strip.background=element_rect(colour="#f0f0f0",fill="#f0f0f0"),
             strip.text = element_text(face="bold"),
