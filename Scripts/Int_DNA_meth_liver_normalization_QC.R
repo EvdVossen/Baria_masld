@@ -1,6 +1,6 @@
 rm(list=ls())
 
-source("~/Data_files/Epigenetics_Daniela/Data_transfer/Rscripts/Baria_masld/Scripts/functions.R")
+source("~/Data_files/Epigenetics_Daniela/Data_transfer/Baria_masld/Scripts/functions.R")
 
 library(IlluminaHumanMethylationEPICmanifest)
 library(minfi)

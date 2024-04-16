@@ -1,7 +1,7 @@
 rm(list=ls())
 
 # Import Functions & Packages
-source("~/Data_files/Epigenetics_Daniela/Data_transfer/R-scripts/functions.R")
+source("~/Data_files/Epigenetics_Daniela/Data_transfer/Baria_masld/Scripts/functions.R")
 
 # Import data
 dat <- get_data(met = T, bval = T)

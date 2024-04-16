@@ -1,7 +1,7 @@
 rm(list=ls())
 
 # Import Functions & Packages
-source("~/Data_files/Epigenetics_Daniela/Data_transfer/R-scripts/functions.R")
+source("~/Data_files/Epigenetics_Daniela/Data_transfer/Baria_masld/Scripts/functions.R")
 
 # imports
 ps_rnaseq <- readRDS(file = "raw_data/BARIA.RNAseq.1205.metaV6.220605.RDS")
