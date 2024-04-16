@@ -1,3 +1,4 @@
+#Load packages
 library(tidyverse)
 library(phyloseq)
 library(DESeq2)
@@ -7,7 +8,7 @@ library(patchwork)
 library(minfi)
 library(coMethDMR)
 
-
+#Set working directory
 setwd("~/Data_files/Epigenetics_Daniela/Data_transfer/")
 
 get_data <- function(met = F, bval = F, ml_res = F, dmr_res = F, rnaseq_norm = F){
