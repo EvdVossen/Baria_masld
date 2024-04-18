@@ -11,7 +11,7 @@ library(coMethDMR)
 #Set working directory
 setwd("~/Data_files/Epigenetics_Daniela/Data_transfer/")
 
-get_data <- function(met = F, bval = F, ml_res = F, dmr_res = F, rnaseq_norm = F){
+get_data <- function(met = F, bval = F,  ml_sep_res = F, dmr_sep_res = F, ml_res = F, dmr_res = F, rnaseq_norm = F){
   subj <- rio::import("Intermediate_files/Subjects_histology.csv") %>% 
     dplyr::mutate(histology = factor(histology, levels = c("Normal", "Steatosis", "Ballooning")))
   
@@ -26,7 +26,7 @@ get_data <- function(met = F, bval = F, ml_res = F, dmr_res = F, rnaseq_norm = F
       tibble::column_to_rownames("V1") %>% 
       dplyr::filter(rownames(.) %in% subj$Sample)
   }
-  if(ml_res == T){
+  if(ml_sep_res == T){
     ml_res_norm_ball <- rio::import("Intermediate_files/ML/normal_ballooning/output_data/feat_imp_perm_cor_features.xlsx") 
     ml_res_norm_steat <- rio::import("Intermediate_files/ML/normal_steatosis/output_data/feat_imp_perm_cor_features.xlsx") 
     ml_res_steat_ball <- rio::import("Intermediate_files/ML/steatosis_ballooning/output_data/feat_imp_perm_cor_features.xlsx") 
@@ -35,13 +35,21 @@ get_data <- function(met = F, bval = F, ml_res = F, dmr_res = F, rnaseq_norm = F
     ml_res_norm_steat = F
     ml_res_steat_ball = F
   }
-  if(dmr_res == T){
-    # dmr_res_norm_ball_g <- rio::import("Intermediate_files/DMR/normal_ballooning/Result_coMethreg_gene_normal_steatosis.xlsx")
-    # dmr_res_norm_ball_ig <- rio::import("Intermediate_files/DMR/normal_ballooning/Result_coMethreg_intergene_normal_steatosis.xlsx")
-    # dmr_res_steat_ball <- rio::import("../Epigenetics_Daniela/liver_all/Eduard/coMethDMR_files/CoMethAllRegions/steat_ballooning/Result_coMethDMR_Fdr005_steat_2024-03-07.xlsx")
-    # 
-    # dmr_three_groups <- 
+  if(dmr_sep_res == T){
+    dmr_res_norm_ball <- rio::import("Intermediate_files/DMR/normal_ballooning/Result_coMethDMR_Fdr005_normal_ballooning.xlsx")
+    dmr_res_steat_ball <- rio::import("Intermediate_files/DMR/steatosis_ballooning/Result_coMethDMR_Fdr005_steatosis_ballooning.xlsx")
+    dmr_three_groups <- rio::import("Intermediate_files/DMR/3_groups/Result_coMethDMR_Fdr005_3groups.xlsx")
+  } else{
+    dmr_res_norm_ball = F
+    dmr_res_steat_ball = F
+    dmr_three_groups = F
   }
+  # if(ml_res == T){
+  #   ml_res <- rio::import("")
+  # }
+  # if(dmr_res ==T){
+  #   dmr_res <- rio::import("")
+  # }
   
   if(rnaseq_norm == T){
     ps_rnaseq <- readRDS(file = "raw_data/BARIA.RNAseq.1205.metaV6.220605.RDS")
@@ -56,9 +64,11 @@ get_data <- function(met = F, bval = F, ml_res = F, dmr_res = F, rnaseq_norm = F
   
   d <- list(met, subj, bval, 
             ml_res_norm_ball, ml_res_norm_steat, ml_res_steat_ball, 
+            dmr_res_norm_ball, dmr_res_steat_ball, dmr_three_groups,
             rnaseq_norm, taxtab)
   names(d) <- c("met", "subj", "bval", 
                 "ml_res_norm_ball", "ml_res_norm_steat", "ml_res_steat_ball", 
+                "dmr_res_norm_ball", "dmr_res_steat_ball", "dmr_three_groups",
                 "rnaseq_norm", "taxtab")
   
   d <-  base::Filter(function(x) !is.logical(x) || x, d)
