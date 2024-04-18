@@ -125,5 +125,3 @@ df <- rbind(out_df %>% filter(FDR <=0.05) %>% mutate(Region = "Gene"),
   .[order(as.numeric(.$FDR)),]
 
 rio::export(df, paste0(coMethRegpath_3groups, "Result_coMethDMR_Fdr005_3groups.xlsx"))
-
-

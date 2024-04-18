@@ -38,18 +38,18 @@ get_data <- function(met = F, bval = F,  ml_sep_res = F, dmr_sep_res = F, ml_res
   if(dmr_sep_res == T){
     dmr_res_norm_ball <- rio::import("Intermediate_files/DMR/normal_ballooning/Result_coMethDMR_Fdr005_normal_ballooning.xlsx")
     dmr_res_steat_ball <- rio::import("Intermediate_files/DMR/steatosis_ballooning/Result_coMethDMR_Fdr005_steatosis_ballooning.xlsx")
-    dmr_three_groups <- rio::import("Intermediate_files/DMR/3_groups/Result_coMethDMR_Fdr005_3groups.xlsx")
+    dmr_res_three_groups <- rio::import("Intermediate_files/DMR/3_groups/Result_coMethDMR_Fdr005_3groups.xlsx")
   } else{
     dmr_res_norm_ball = F
     dmr_res_steat_ball = F
-    dmr_three_groups = F
+    dmr_res_three_groups = F
   }
-  # if(ml_res == T){
-  #   ml_res <- rio::import("")
-  # }
-  # if(dmr_res ==T){
-  #   dmr_res <- rio::import("")
-  # }
+  if(ml_res == T){
+    ml_res <- rio::import("Intermediate_files/ML/Top_ML_results.xlsx")
+  }
+  if(dmr_res ==T){
+    dmr_res <- rio::import("Intermediate_files/DMR/Sig_DMRs.xlsx")
+  }
   
   if(rnaseq_norm == T){
     ps_rnaseq <- readRDS(file = "raw_data/BARIA.RNAseq.1205.metaV6.220605.RDS")
@@ -64,17 +64,19 @@ get_data <- function(met = F, bval = F,  ml_sep_res = F, dmr_sep_res = F, ml_res
   
   d <- list(met, subj, bval, 
             ml_res_norm_ball, ml_res_norm_steat, ml_res_steat_ball, 
-            dmr_res_norm_ball, dmr_res_steat_ball, dmr_three_groups,
+            dmr_res_norm_ball, dmr_res_steat_ball, dmr_res_three_groups,
+            ml_res, dmr_res,
             rnaseq_norm, taxtab)
   names(d) <- c("met", "subj", "bval", 
                 "ml_res_norm_ball", "ml_res_norm_steat", "ml_res_steat_ball", 
-                "dmr_res_norm_ball", "dmr_res_steat_ball", "dmr_three_groups",
+                "dmr_res_norm_ball", "dmr_res_steat_ball", "dmr_res_three_groups",
+                "ml_res", "dmr_res",
                 "rnaseq_norm", "taxtab")
   
-  d <-  base::Filter(function(x) !is.logical(x) || x, d)
+  d <- base::Filter(function(x) !is.logical(x) || x, d)
   
-  # suppressWarnings(dir.create(paste0(path_data, "Manuscript/Main_Figures"), recursive = T))
-  # suppressWarnings(dir.create(paste0(path_data, "Manuscript/Supplementary_information"), recursive = T))
+  # suppressWarnings(dir.create(paste0("Manuscript/Main_Figures"), recursive = T))
+  # suppressWarnings(dir.create(paste0("Manuscript/Supplementary_information"), recursive = T))
   
   return(d)
 }
