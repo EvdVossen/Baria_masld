@@ -6,7 +6,9 @@ dat <- get_data(met = T, ml_sep_res = T, dmr_sep_res = T)
 base::list2env(dat,envir=.GlobalEnv); rm(dat)
 
 #Combine DMR lists
-rbind(dmr_res_norm_ball, dmr_res_steat_ball, dmr_res_three_groups) %>% 
+rbind((dmr_res_norm_ball %>% dplyr::mutate(Comparison = "Normal v Ballooning")), 
+      (dmr_res_steat_ball %>% dplyr::mutate(Comparison = "Steatosis v Ballooning")), 
+      (dmr_res_three_groups %>% dplyr::mutate(Comparison = "All groups"))) %>% 
   .[order(as.numeric(.$pValue)),] %>% 
   rio::export(., "Intermediate_files/DMR/Sig_DMRs.xlsx")
 
