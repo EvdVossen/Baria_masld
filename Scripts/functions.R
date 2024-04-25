@@ -11,6 +11,9 @@ library(coMethDMR)
 #Set working directory
 setwd("~/Data_files/Epigenetics_Daniela/Data_transfer/")
 
+pal_hist <- c("#E41A1C", "darkgreen", "#377EB8")
+shape_hist <- c(15,16,17)
+
 get_data <- function(met = F, bval = F,  ml_sep_res = F, dmr_sep_res = F, ml_res = F, dmr_res = F, rnaseq_norm = F){
   subj <- rio::import("Intermediate_files/Subjects_histology.csv") %>% 
     dplyr::mutate(histology = factor(histology, levels = c("Normal", "Steatosis", "Ballooning")))
